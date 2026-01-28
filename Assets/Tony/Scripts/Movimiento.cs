@@ -66,5 +66,21 @@ public class Movimiento : MonoBehaviour
         float speed = isSprinting ? sprintSpeed : moveSpeed;
         controller.Move(direction * (speed * Time.deltaTime));
         
+        if (direction.magnitude > 0.1f)
+        {
+            float targetAngle =
+                Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+
+            float smoothAngle = Mathf.SmoothDampAngle(
+                transform.eulerAngles.y,
+                targetAngle,
+                ref currentVelocity,
+                rotationSmooth
+            );
+
+            transform.rotation = Quaternion.Euler(0, smoothAngle, 0);
+        }
+        
+        
     }
 }
