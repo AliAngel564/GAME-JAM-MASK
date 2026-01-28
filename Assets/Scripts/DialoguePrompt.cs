@@ -7,11 +7,10 @@ public class DialoguePrompt : MonoBehaviour
     private Transform npcTransform;
     [Header("Prompt Spot Transform")]
     [SerializeField] private Transform promptSpot;
-
-    private Quaternion currentPromtRotation;
-    
     [Header("Prompt Canvas")]
     [SerializeField]private Canvas promptCanvas;
+    
+    
     
     private void Start()
     {
