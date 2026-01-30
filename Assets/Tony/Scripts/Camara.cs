@@ -19,6 +19,10 @@ public class Camara : MonoBehaviour
     private float yaw;
     private float pitch;
     
+    public LayerMask mask;
+    public float cameraRadius = 0.25f;
+    public float collisionOffset = 0.15f;
+    
     private PlayerInputActions inputActions;
 
     void Awake()
@@ -58,11 +62,22 @@ public class Camara : MonoBehaviour
     void LateUpdate()
     {
         Quaternion rotation = Quaternion.Euler(pitch, yaw, 0);
+        
+        Vector3 origin = player.position + Vector3.up * height;
+        Vector3 desiredPosition = origin - rotation * Vector3.forward * distance;
 
-        Vector3 position =
-            player.position - rotation * Vector3.forward * distance + Vector3.up * height;
-
-        transform.position = position;
+        if (Physics.SphereCast(origin, cameraRadius, (desiredPosition - origin).normalized, out RaycastHit hit,
+                distance, mask))
+        {
+            transform.position = hit.point + hit.normal * collisionOffset;
+        }
+        else
+        {
+            transform.position = desiredPosition;
+        }
+        
         transform.rotation = rotation;
+        
+     
     }
 }
