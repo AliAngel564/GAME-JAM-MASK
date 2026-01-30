@@ -9,8 +9,8 @@ public class DialoguePrompt : MonoBehaviour
     [SerializeField] private Transform promptSpot;
     [Header("Prompt Canvas")]
     [SerializeField]private Canvas promptCanvas;
-    
-    
+
+    public bool isDialogueAvailable = false;
     
     private void Start()
     {
@@ -24,6 +24,7 @@ public class DialoguePrompt : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             promptCanvas.enabled = true;
+            isDialogueAvailable = true;
         }
     }
 
@@ -32,6 +33,7 @@ public class DialoguePrompt : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             promptCanvas.enabled = false;
+            isDialogueAvailable = false;
         }
     }
 }
